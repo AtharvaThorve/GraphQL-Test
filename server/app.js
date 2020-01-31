@@ -1,10 +1,16 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
+const schema = require('./schema/schema')
 
+// Command to make an app using express
 const app = express();
 
-app.use('/graphql', graphqlHTTP({}));
+// Middleware
+app.use('/graphql', graphqlHTTP({
+	schema
+}));
 
+// method to run the app or listen to a port
 app.listen(4000, () => {
 	console.log('Now listening to requests on port 4000');
 });
