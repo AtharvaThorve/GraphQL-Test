@@ -1,10 +1,14 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
-
+const mongoose = require('mongoose')
 // Command to make an app using express
 const app = express();
 
+mongoose.connect('mongodb+srv://Atharva:test123@book-app-fw1al.mongodb.net/test?retryWrites=true&w=majority')
+mongoose.connection.once('open', () => {
+	console.log('Connected to database')
+})
 // Middleware
 app.use(
 	'/graphql',

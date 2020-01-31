@@ -1,7 +1,8 @@
 // Inside this file the whole schema of graph and describes like object types their relation and how we can reach into the graph and interact with the data
 const graphql = require('graphql');
 const _ = require('lodash');
-const axios = require('../axios-instance');
+const Book = require('../Models/Book');
+const Author = require('../Models/Author');
 
 // Destructuring to take out the GraphQLObjectType and other props from graphql. The casing is very important.
 const {
@@ -114,15 +115,24 @@ const Mutation = new GraphQLObjectType({
 				age: { type: GraphQLInt }
 			},
 			resolve(parent, args) {
-				let author = {
-					name: args.name,
-					age: args.age
-				};
-
-				axios.post('/authors.json', author).then(response => {
-					// console.log(response.data);
-					return response.data
+				let author = new Author({
+					...args
 				});
+				return author.save();
+			}
+		},
+		addBook: {
+			type: BookType,
+			args: {
+				name: { type: GraphQLString },
+				genre: { type: GraphQLString },
+				authorId: { type: GraphQLID }
+			},
+			resolve(parent, args) {
+				let book = new Book({
+					...args
+				});
+				return book.save();
 			}
 		}
 	}
