@@ -7,7 +7,8 @@ const app = express();
 
 // Middleware
 app.use('/graphql', graphqlHTTP({
-	schema
+	schema,
+	graphiql: true // Make this true to use graphiql
 }));
 
 // method to run the app or listen to a port
