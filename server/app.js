@@ -2,9 +2,15 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
 const mongoose = require('mongoose')
+const cors = require('cors')
 // Command to make an app using express
 const app = express();
 
+// allow cross origin requests
+app.use(cors())
+
+// Connect to mlab database
+// Make sure to replace my db string and creds with your own
 mongoose.connect('mongodb+srv://Atharva:test123@book-app-fw1al.mongodb.net/test?retryWrites=true&w=majority')
 mongoose.connection.once('open', () => {
 	console.log('Connected to database')
